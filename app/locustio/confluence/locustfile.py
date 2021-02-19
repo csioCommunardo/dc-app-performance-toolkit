@@ -1,6 +1,6 @@
 from locust import HttpUser, task, between
 
-from extension.confluence.extension_locust import app_specific_action
+from extension.confluence.extension_locust import csi_embed_sharepoint_document, csi_embed_sharepoint_list, csi_adal_helper, csi_spc_license
 from locustio.common_utils import LocustConfig, MyBaseTaskSet
 from locustio.confluence.http_actions import login_and_view_dashboard, view_page_and_tree, view_dashboard, view_blog, \
     search_cql_and_view_results, open_editor_and_create_blog, create_and_edit_page, comment_page, view_attachments, \
@@ -55,10 +55,22 @@ class ConfluenceBehavior(MyBaseTaskSet):
     @task(config.percentage('like_page'))
     def like_page_action(self):
         like_page(self)
+    
+    @task(config.percentage('standalone_extension'))
+    def csi_embed_sharepoint_document_action(self):
+        csi_embed_sharepoint_document(self)
 
     @task(config.percentage('standalone_extension'))
-    def custom_action(self):
-        app_specific_action(self)
+    def csi_embed_sharepoint_list_action(self):
+        csi_embed_sharepoint_list(self)
+
+    @task(config.percentage('standalone_extension'))
+    def csi_adal_helper_action(self):
+        csi_adal_helper(self)
+
+    @task(config.percentage('standalone_extension'))
+    def csi_spc_license_action(self):
+        csi_spc_license(self)
 
 
 class ConfluenceUser(HttpUser):
