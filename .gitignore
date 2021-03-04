@@ -1,6 +1,7 @@
 .idea/
 outputs/
 **/results/
+app/confluence.yml
 **/datasets/*/*.csv
 *venv*
 .DS_Store
