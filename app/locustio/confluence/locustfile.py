@@ -1,6 +1,6 @@
 from locust import HttpUser, task, between
 
-from extension.confluence.extension_locust import csi_embed_sharepoint_document, csi_embed_sharepoint_list, csi_adal_helper, csi_spc_license
+from extension.confluence.extension_locust import csi_embed_sharepoint_document, csi_embed_sharepoint_list, csi_adal_helper, csi_spc_license, csi_view_page_document_macro, csi_view_page_list_macro, csi_view_page_blog_document_macro, csi_view_page_blog_list_macro
 from locustio.common_utils import LocustConfig, MyBaseTaskSet
 from locustio.confluence.http_actions import login_and_view_dashboard, view_page_and_tree, view_dashboard, view_blog, \
     search_cql_and_view_results, open_editor_and_create_blog, create_and_edit_page, comment_page, view_attachments, \
@@ -72,6 +72,21 @@ class ConfluenceBehavior(MyBaseTaskSet):
     def csi_spc_license_action(self):
         csi_spc_license(self)
 
+    @task(config.percentage('standalone_extension'))
+    def csi_view_page_document_macro_action(self):
+        csi_view_page_document_macro(self)
+
+    @task(config.percentage('standalone_extension'))
+    def csi_view_page_list_macro_action(self):
+        csi_view_page_list_macro(self)
+
+    @task(config.percentage('standalone_extension'))
+    def csi_view_page_blog_document_macro_action(self):
+        csi_view_page_blog_document_macro(self)
+
+    @task(config.percentage('standalone_extension'))
+    def csi_view_page_blog_list_macro_action(self):
+        csi_view_page_blog_list_macro(self)
 
 class ConfluenceUser(HttpUser):
     host = CONFLUENCE_SETTINGS.server_url
